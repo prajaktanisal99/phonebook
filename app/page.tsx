@@ -1,22 +1,28 @@
-import React from 'react'
-import User from './user/page'
-import Contacts from './contacts/page'
+'use client'
+import React from "react";
+import { signIn, useSession } from "next-auth/react";
+import Dashboard from "./components/Dashboard";
 
-const Home = async () => {
+const Home = () => {
+  const { data: session } = useSession();
 
-  const response = await fetch("https://jsonplaceholder.typicode.com/users", {cache: 'no-store'});
-  const contacts = await response.json();
-
-  console.log(contacts)
+  console.log("data", session);
   return (
-    <div className='p-10'>
-      <h1 className='flex flex-row justify-center text-4xl pb-10'>Contacts Application</h1>
-      <div className='display flex flex-row justify-evenly h-screen border-spacing-0'>
-        <User />
-        <Contacts contacts= {contacts} />
-      </div>
+    <div>
+      {session?.user ? (
+        <div className="p-4 md:p-10 flex flex-col md:flex-row justify-center gap-3 w-screen h-screen text-black overflow-hidden">
+          <Dashboard user={session.user} />
+        </div>
+      ) : (
+        <div className="flex flex-col p-10 h-screen">
+          <h1 className="text-3xl ">Not Signed In</h1>
+          <button className="border-2 w-fit p-4 rounded-sm " onClick={() => signIn()}>
+            Sign In
+          </button>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
