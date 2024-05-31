@@ -7,6 +7,7 @@ export interface ContactSchema {
   website: string;
   email: string;
   description: string;
+  tag: [string];
 }
 
 export interface AddressSchema {

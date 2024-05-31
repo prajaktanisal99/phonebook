@@ -13,9 +13,5 @@ export const authOptions: NextAuthOptions = {
     ],
   //   used for session encryption
     secret: process.env.NEXTAUTH_SECRET as string,
-    pages: {
-      signIn: "/signIn",
-      
-    }
   };
 
